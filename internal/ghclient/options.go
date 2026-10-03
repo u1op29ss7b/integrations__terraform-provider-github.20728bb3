@@ -77,13 +77,13 @@ func (o *ClientOptions) getRESTURL() (*string, error) {
 
 	u, err := url.Parse(baseURL)
 	if err != nil {
-		return nil, fmt.Errorf("unable to parse base url: %v", err)
+		return nil, fmt.Errorf("unable to parse base url: %w", err)
 	}
 
 	if o.IsGHES {
-		u = u.JoinPath(RESTAPIPath)
-	} else {
 		u = u.JoinPath(GHESRESTAPIPath)
+	} else {
+		u = u.JoinPath(RESTAPIPath)
 	}
 
 	return new(u.String()), nil
